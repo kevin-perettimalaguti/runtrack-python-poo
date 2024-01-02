@@ -25,7 +25,7 @@ cercle1 = Cercle(4)
 print(cercle1.afficherInfos())
 
 cercle2 = Cercle(7)
-cercle2.changerRayon(7)
+cercle2.changerRayon(32)
 print(cercle2.afficherInfos())
 
 

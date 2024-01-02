@@ -5,8 +5,8 @@ class Cercle:
     def __init__(self, rayon):
         self.rayon = rayon
         
-    def changerRayon(self):        
-        self.rayon = int(input("Saisissez une nouvelle valeur pour le rayon : "))
+    def changerRayon(self,rayon):   
+        self.rayon = rayon   
     
     def diametre(self):
         return self.rayon * 2
@@ -25,6 +25,7 @@ cercle1 = Cercle(4)
 print(cercle1.afficherInfos())
 
 cercle2 = Cercle(7)
+cercle2.changerRayon(7)
 print(cercle2.afficherInfos())
 
 

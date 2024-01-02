@@ -14,7 +14,7 @@ class Point:
         self.x = int(input("Nouvelle valeur pour X : "))
         self.y = int(input("Nouvelle valeur pour Y : "))
 
-# Instance de la classe point
+# Instance de la classe Point
 point = Point(5, 10)
 
 # Afficher les points initiaux
@@ -22,7 +22,7 @@ print("Avant modification :")
 point.afficherLesPoints()
 point.afficherX_et_afficherY()
 
-# Modifier les valeurs de x et y
+# Modifier les valeurs de x et de y
 point.changerX_et_changerY()
 
 # Afficher les points après modification

@@ -19,8 +19,10 @@ pet = Animal(0, None)
 
 #L'age de depart
 pet.appel_age()
+
 # Age de l'animal apres l'appel de la methode viellir
 pet.veillir()
+
 #Son nouvelle age
 pet.appel_age()
-pet.nommer("Corvet")
+pet.nommer("Luna") # Attribution d'un prénom a mon pet

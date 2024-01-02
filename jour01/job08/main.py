@@ -20,7 +20,6 @@ class Cercle:
     def afficherInfos(self):
         return f"\nLes infos de mon Cercle:\nRayon: {self.rayon}\nDiamètre: {self.diametre()}\nCirconférence: {self.circonference()}\nAire: {self.aire()}\n"
 
-
 # Création du premier cercle    
 cercle1 = Cercle(4)
 print(cercle1.afficherInfos())

@@ -66,7 +66,6 @@ class Equipe:
             joueur.afficherStatistiques()
 
     def mettreAJourStatistiquesJoueur(self, nom_joueur, buts=0, passes=0, cartons_jaunes=0, cartons_rouges=0):
-        # Méthode pour mettre à jour les statistiques d'un joueur spécifique
         for joueur in self.liste_joueurs:
             if joueur.nom == nom_joueur:
                 joueur.nb_but += buts
@@ -100,6 +99,7 @@ manchester.afficherStatistiquesJoueurs()
 # Simulation d'un match
 vanny.marquerUnBut()
 lucy.recevoirUnCartonRouge()
+
 
 # Affichage des statistiques après le match
 print("\nStatistiques après le match:")

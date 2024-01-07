@@ -1,62 +1,78 @@
-# import ramdom
+import random
 
 class Carte:
     def __init__(self, valeur, couleur):
-        self.carte_valeur = valeur
-        self.carte_couleur = couleur
-        
-    def carte_chiffre(self, chiffre):   
-        if 2 <= chiffre <= 10 and type(chiffre) == int:
-            self.carte_valeur = chiffre
-            print(f"J'ai eu un {self.carte_valeur} {self.carte_couleur}")           
-            
-    def carte_figure(self):
-        self.carte_valeur = 10
-        print(f"Je suis tombée sur une figure, je remporte: {self.carte_valeur} points")        
-        
-    def carte_as(self, jouer_unAs):
-        if jouer_unAs == 1:
-            self.carte_valeur = 1
-            print(f"Mon As aura la valeur: {self.carte_valeur} points")
-        elif jouer_unAs == 11:
-            self.carte_valeur = 11
-            print(f"Mon As aura la valeur: {self.carte_valeur} points")
-               
-            
-class Jeu(Carte):
-    def __init__(self, valeur, couleur):
-        super().__init__(valeur, couleur)
-        self.liste_paquet = []        
-        
-    def ajouter_carteAlaMain(self, nouvelle_pioche):
-        self.liste_main = []
-        self.liste_main.append(nouvelle_pioche)        
-        
-class Joueur():
-    def __init__(self, nom, statut, nb_points): 
-        self.joueur_nom = nom
-        self.statut = statut
-        self.nb_points = nb_points
-        self.carte_en_main = {}
+        self.valeur = valeur
+        self.couleur = couleur
 
-    def AfficherInfo(self): 
-        print(f"\nNom du joeur : {self.joueur_nom}\nStatut du joueur :  {self.statut}\nNombre de point : {self.nb_points}\nCarte en main : {self.carte_en_main}\n")
-        
-    def recevoir_carte(self, pioche):
-        self.carte_en_main.append(pioche)
-        
-        
-    def refuser_carte(self):
-        pass
-    
-    def objectif_pointsJoueur(self):
-        pass           
-            
-    def objectif_pointsCroupier(self):
-        pass
-    
-    
-    
+    def __str__(self):
+        return f"{self.valeur} de {self.couleur}"
 
+class Jeu(Carte): 
+    def __init__(self):
+        super().__init__(None, None)
+        self.paquet = self.creer_paquet()
 
-    
+    def creer_paquet(self):
+        valeurs = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Valet', 'Dame', 'Roi', 'As']
+        couleurs = ['Cœur', 'Carreau', 'Trèfle', 'Pique']
+        paquet = [Carte(valeur, couleur) for valeur in valeurs for couleur in couleurs]
+        random.shuffle(paquet)
+        return paquet
+
+    def distribuer_cartes(self):
+        return [self.paquet.pop(), self.paquet.pop()]
+
+    def calculer_total(self, main):
+        total = 0
+        as_count = 0
+
+        for carte in main:
+            if carte.valeur in ['Valet', 'Dame', 'Roi']:
+                total += 10
+            elif carte.valeur == 'As':
+                as_count += 1
+            else:
+                total += int(carte.valeur)
+
+        for _ in range(as_count):
+            if total + 11 <= 21:
+                total += 11
+            else:
+                total += 1
+
+        return total
+
+    def joueur_gagne(self, total_joueur, total_croupier):
+        return (total_joueur <= 21 and (total_croupier > 21 or total_joueur > total_croupier))
+
+    def jouer_partie(self):
+        main_joueur = self.distribuer_cartes()
+        main_croupier = self.distribuer_cartes()
+
+        while True:
+            print(f"Main du joueur: {[str(carte) for carte in main_joueur]}, Total: {self.calculer_total(main_joueur)}")
+            choix = input("Voulez-vous prendre une carte ? (Oui/Non): ")
+
+            if choix.lower() == 'oui':
+                main_joueur.append(self.paquet.pop())
+                if self.calculer_total(main_joueur) > 21:
+                    print("Vous avez dépassé 21. Vous avez perdu.")
+                    return
+            else:
+                break
+
+        while self.calculer_total(main_croupier) < 17:
+            main_croupier.append(self.paquet.pop())
+
+        print(f"\nMain du joueur: {[str(carte) for carte in main_joueur]}, Total: {self.calculer_total(main_joueur)}")
+        print(f"Main du croupier: {[str(carte) for carte in main_croupier]}, Total: {self.calculer_total(main_croupier)}")
+
+        if self.joueur_gagne(self.calculer_total(main_joueur), self.calculer_total(main_croupier)):
+            print("Vous avez gagné!")
+        else:
+            print("Le croupier a gagné.")
+
+# Exemple d'utilisation
+jeu = Jeu()
+jeu.jouer_partie()
